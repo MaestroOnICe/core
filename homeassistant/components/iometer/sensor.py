@@ -29,7 +29,7 @@ from .entity import IOmeterEntity
 class IOmeterEntityDescription(SensorEntityDescription):
     """Describes IOmeter sensor entity."""
 
-    value_fn: Callable[[IOmeterData], StateType]
+    value_fn: Callable[[IOmeterData], str | int | float]
 
 
 SENSOR_TYPES: list[IOmeterEntityDescription] = [

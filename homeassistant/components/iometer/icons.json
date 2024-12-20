@@ -4,8 +4,8 @@
       "attachment_status": {
         "default": "mdi:eye",
         "state": {
-          "attached": "mdi:attachment",
-          "detached": "mdi:attachment-off",
+          "attached": "mdi:check-bold",
+          "detached": "mdi:close",
           "unknown": "mdi:help"
         }
       },

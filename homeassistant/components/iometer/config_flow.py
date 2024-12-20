@@ -81,16 +81,13 @@ class IOMeterConfigFlow(ConfigFlow, domain=DOMAIN):
                 status = await client.get_current_status()
             except IOmeterConnectionError:
                 errors["base"] = "cannot_connect"
-
-            if "base" not in errors:
+            else:
                 await self.async_set_unique_id(status.device.id)
-            self._abort_if_unique_id_configured()
-
-            return self.async_create_entry(
-                title=f"IOmeter-{self.data['meter_number']}",
-                data={CONF_HOST: user_input[CONF_HOST]},
-            )
-
+                self._abort_if_unique_id_configured()
+                return self.async_create_entry(
+                    title=f"IOmeter-{self.data['meter_number']}",
+                    data={CONF_HOST: user_input[CONF_HOST]},
+                )
         return self.async_show_form(
             step_id="user",
             data_schema=CONFIG_SCHEMA,
