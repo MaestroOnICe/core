@@ -39,7 +39,7 @@
         "name": "Battery level"
       },
       "connection_status": {
-        "name": "Connection to WiFi",
+        "name": "Connection Core/Bridge",
         "state": {
           "connected": "Connected",
           "disconnected": "Disconnected",

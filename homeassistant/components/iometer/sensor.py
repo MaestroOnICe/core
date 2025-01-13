@@ -13,6 +13,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
     SIGNAL_STRENGTH_DECIBELS,
+    STATE_UNKNOWN,
     EntityCategory,
     UnitOfEnergy,
     UnitOfPower,
@@ -43,8 +44,8 @@ SENSOR_TYPES: list[IOmeterEntityDescription] = [
         key="connection_status",
         translation_key="connection_status",
         device_class=SensorDeviceClass.ENUM,
-        options=["connected", "disconnected", "unknown"],
-        value_fn=lambda data: data.status.device.core.connection_status.value,
+        options=["connected", "disconnected"],
+        value_fn=lambda data: data.status.device.core.connection_status,
     ),
     IOmeterEntityDescription(
         key="wifi_rssi",
@@ -68,8 +69,8 @@ SENSOR_TYPES: list[IOmeterEntityDescription] = [
         key="power_status",
         translation_key="power_status",
         device_class=SensorDeviceClass.ENUM,
-        options=["battery", "wired", "unknown"],
-        value_fn=lambda data: data.status.device.core.power_status.value,
+        options=["battery", "wired"],
+        value_fn=lambda data: data.status.device.core.power_status or STATE_UNKNOWN,
     ),
     IOmeterEntityDescription(
         key="battery_level",
@@ -83,15 +84,16 @@ SENSOR_TYPES: list[IOmeterEntityDescription] = [
         key="attachment_status",
         translation_key="attachment_status",
         device_class=SensorDeviceClass.ENUM,
-        options=["attached", "detached", "unknown"],
-        value_fn=lambda data: data.status.device.core.attachment_status.value,
+        options=["attached", "detached"],
+        value_fn=lambda data: data.status.device.core.attachment_status
+        or STATE_UNKNOWN,
     ),
     IOmeterEntityDescription(
         key="pin_status",
         translation_key="pin_status",
         device_class=SensorDeviceClass.ENUM,
-        options=["entered", "pending", "missing", "unknown"],
-        value_fn=lambda data: data.status.device.core.pin_status.value,
+        options=["entered", "pending", "missing"],
+        value_fn=lambda data: data.status.device.core.pin_status or STATE_UNKNOWN,
     ),
     IOmeterEntityDescription(
         key="total_consumption",
@@ -139,6 +141,7 @@ async def async_setup_entry(
 class IOmeterSensor(IOmeterEntity, SensorEntity):
     """Defines a IOmeter sensor."""
 
+    _attr_has_entity_name = True
     entity_description: IOmeterEntityDescription
 
     def __init__(

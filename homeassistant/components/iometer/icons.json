@@ -12,8 +12,8 @@
       "connection_status": {
         "default": "mdi:eye",
         "state": {
-          "connected": "mdi:wifi",
-          "disconnected": "mdi:wifi-off",
+          "connected": "mdi:check-bold",
+          "disconnected": "mdi:close",
           "unknown": "mdi:help"
         }
       },

@@ -12,9 +12,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DOMAIN
 
-CONFIG_SCHEMA: Final = vol.Schema(
-    {vol.Required(CONF_HOST, description={"suggested_value": "192.168.1.10"}): str}
-)
+CONFIG_SCHEMA: Final = vol.Schema({vol.Required(CONF_HOST): str})
 
 
 class IOMeterConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -41,7 +39,7 @@ class IOMeterConfigFlow(ConfigFlow, domain=DOMAIN):
         self.data["meter_number"] = status.meter.number
 
         await self.async_set_unique_id(status.device.id)
-        self._abort_if_unique_id_configured(updates={CONF_HOST: host})
+        self._abort_if_unique_id_configured()
 
         self.context.update(
             {
@@ -82,6 +80,7 @@ class IOMeterConfigFlow(ConfigFlow, domain=DOMAIN):
             except IOmeterConnectionError:
                 errors["base"] = "cannot_connect"
             else:
+                self.data["meter_number"] = status.meter.number
                 await self.async_set_unique_id(status.device.id)
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(

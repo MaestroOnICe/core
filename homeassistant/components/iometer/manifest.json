@@ -7,6 +7,7 @@
   "documentation": "https://www.home-assistant.io/integrations/iometer",
   "homekit": {},
   "iot_class": "local_polling",
-  "requirements": ["iometer==0.1.1"],
+  "quality_scale": "bronze",
+  "requirements": ["iometer==0.1.0"],
   "zeroconf": ["_iometer._tcp.local."]
 }
